@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto WebVR Kirtan</title>
+     <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
+     <script>
+AFRAME.registerComponent('obra-interactiva', {
+  schema: {
+    ficha: { type: 'selector' }
+  },
+
+  init: function () {
+    const obra = this.el;
+    const ficha = this.data.ficha;
+
+    if (!ficha) return;
+
+    obra.addEventListener('mouseenter', () => {
+      ficha.setAttribute('visible', true);
+    });
+
+    obra.addEventListener('mouseleave', () => {
+      ficha.setAttribute('visible', false);
+    });
+  }
+});
+</script>
+
+</head>
+<body>
+
+    <!-- recursos -->
+
+    <a-assets>
+
+        <img id="floor" src="assets/Madera.jpg">
+        <img id="wall" src="assets/Pared 3.jpg">
+        <img id="wall2" src="assets/Pared 4.jpg">
+        <img id="ceiling" src="assets/Techo 1.jpg">
+        <img id="0" src="assets/00 Akutagawa_Ryunosuke_photo.jpg">
+        <img id="1" src="assets/01 Las mandarinas.png">
+        <img id="2" src="assets/02 Extractos de la agenda de Yasukichi.jpg">
+        <img id="3" src="assets/03 Al borde del mar.jpg">
+        <img id="4" src="assets/04 Engranajes.jpg">
+        <img id="5" src="assets/05 Vida de un idiota.jpg">
+
+    </a-assets>
+
+    <!-- escena -->
+
+    <a-scene xr-mode-ui="enterAREnable: false">
+
+    <!-- cámara y cursor -->
+    <a-entity
+    camera look-controls
+    position="0 1.6 0"
+    >
+    <a-entity
+        cursor="fuse: true; fuseTimeout: 1500"
+        raycaster="objects: .obra-interactiva; far: 10"
+        position="0 0 -1"
+        geometry="primitive: ring; radiusInner: 0.012; radiusOuter: 0.02"
+        material="color: #FFFFFF; shader: flat"
+    >
+    </a-entity>
+    </a-entity>
+
+
+    <!-- iluminación -->
+
+        <!-- general -->
+        <a-light
+        type="ambient"
+        color="#FFF1DC"
+        intensity="0.65"
+        ></a-light>
+
+        <!-- general arriba -->
+        <a-light
+        type="point"
+        position="0 3.7 0"
+        color="#FFF0D5"
+        intensity="0.7"
+        distance="12"
+        decay="2"
+        ></a-light>
+
+        <!-- dirigida izquierda -->
+        <a-light
+        type="spot"
+        position="-3.22 3.54 2.3"
+        rotation="-36.93 90 0"
+        color="#FFE7B0"
+        intensity="3.37"
+        angle="35.81"
+        penumbra="0.6"
+        distance="3.68"
+        ></a-light>
+
+        <a-light
+        type="spot"
+        position="-3.22 3.54 -2.3"
+        rotation="-36.93 90 0"
+        color="#FFE7B0"
+        intensity="3.37"
+        angle="35.81"
+        penumbra="0.6"
+        distance="3.68"
+        ></a-light>
+
+        <!-- dirigida fondo -->
+        <a-light
+        type="spot"
+        position="-2.3 3.54 -2.5"
+        rotation="-36.93 0 0"
+        color="#FFE7B0"
+        intensity="3.37"
+        angle="35.81"
+        penumbra="0.6"
+        distance="3.68"
+        ></a-light>
+
+        <a-light
+        type="spot"
+        position="2.3 3.54 -2.5"
+        rotation="-36.93 0 0"
+        color="#FFE7B0"
+        intensity="3.37"
+        angle="35.81"
+        penumbra="0.6"
+        distance="3.68"
+        ></a-light>
+
+        <!-- dirigida derecha -->
+        <a-light
+        type="spot"
+        position="3.22 3.54 -2.3"
+        rotation="-36.93 -90 0"
+        color="#FFE7B0"
+        intensity="3.37"
+        angle="35.81"
+        penumbra="0.6"
+        distance="3.68"
+        ></a-light>
+
+        <a-light
+        type="spot"
+        position="3.22 3.54 2.3"
+        rotation="-36.93 -90 0"
+        color="#FFE7B0"
+        intensity="3.37"
+        angle="35.81"
+        penumbra="0.6"
+        distance="3.68"
+        ></a-light>
+
+        <!-- piso -->
+         <a-plane src="#floor" material="src:#floor; repeat: 5 5" rotation="-90 0 0" width="10" height="10"> </a-plane>
+
+         <!-- paredes -->
+
+        <a-plane src="#wall2" material="src:#wall2; repeat: 1 3" rotation="0 0 90" width="4" height="10" position="0 2 -5"> </a-plane>
+
+        <a-plane src="#wall2" material="src:#wall2; repeat: 1 3" rotation="0 -90 90" width="4" height="10" position="5 2 0"> </a-plane>
+
+        <a-plane src="#wall2" material="src:#wall2; repeat: 1 3" rotation="0 90 90" width="4" height="10" position="-5 2 0"> </a-plane>
+
+        <a-plane src="#wall2" material="src:#wall2; repeat: 1 3" rotation="0 180 90" width="4" height="10" position="0 2 5"> </a-plane>
+        
+         <!-- techo --> 
+
+        <a-plane src="#ceiling" material="src:#ceiling; repeat: 5 5" rotation="90 0 0" width="10" height="10" position="0 4 0"> </a-plane>
+
+         <!-- geometria -->
+
+         a-torus color="yellow" position="0 1.4 0"></a-torus>
+
+        <!-- lienzos -->
+
+        <a-plane src="#0" material="src:#0; repeat: 1 1" rotation=" 0 90 0" width="3" height="3" position="-4.9 2 2.3"></a-plane>
+
+        <a-plane src="#1" material="src:#1; repeat: 1 1" rotation="0 90 0" width="3" height="3" position="-4.9 2 -2.3"></a-plane>
+        
+        <a-plane src="#2" material="src:#2; repeat: 1 1" rotation="0 0 0" width="3" height="3" position="-2.3 2 -4.9"></a-plane>
+
+        <a-plane src="#3" material="src:#3; repeat: 1 1" rotation="0 0 " width="3" height="3" position="2.3 2 -4.9"></a-plane>
+
+        <a-plane src="#4" material="src:#4; repeat: 1 1" rotation="0 -90 0" width="3" height="3" position="4.9 2 -2.3"></a-plane>
+
+        <a-plane src="#5" material="src:#5; repeat: 1 1" rotation="0 -90 0" width="3" height="3" position="4.9 2 2.3"></a-plane>
+
+        <!-- texto -->
+        
+        <!-- cartel 0 -->
+
+        <a-plane
+        id="obra0"
+        class="obra-interactiva"
+        obra-interactiva="ficha: #ficha0"
+        src="#0"
+        rotation="0 90 0"
+        width="3"
+        height="3"
+        position="-4.9 2 2.3">
+        </a-plane>
+
+        <a-entity position="-4.82 0.7 2.3" rotation="0 90 0">
+        <a-plane width="2.5" height="0.55"
+            material="color: #F2E8D5; shader: flat">
+        </a-plane>
+
+        <a-text value="Ryunosuke Akutagawa"
+            color="#28231F" align="center"
+            width="3" position="0 0.12 0.01">
+        </a-text>
+
+        <a-text value="1892 a 1927 | Escritor japones"
+            color="#28231F" align="center"
+            width="2.95" position="0 -0.12 0.01">
+        </a-text>
+        </a-entity>
+
+        <!-- ficha ampliada -->
+        <a-entity id="ficha0" visible="false"
+        position="-4.80 2 2.3" rotation="0 90 0">
+
+        <a-plane width="2.65" height="1.8"
+            material="color: #211F1C; shader: flat; opacity: 0.97">
+        </a-plane>
+
+        <a-text value="Ryunosuke Akutagawa"
+            color="#F4D7A1" align="center"
+            width="2.4" position="0 0.82 0.02">
+        </a-text>
+
+        <a-text
+            value="Ryunosuke Akutagawa (1892 a 1927) fue el padre del cuento moderno japones, famoso por su obra maestra Rashomon.
+            Criado bajo el trauma de la demencia de su madre, vivio con un miedo constante a la locura. Escribio mas de 150 relatos de profunda diseccion psicologica, pero acosado por el insomnio y las alucinaciones, se suicido a los 35 años. En su honor se otorga el premio literario mas importante de Japon."
+            color="#FFFFFF" align="left"
+            wrap-count="34" width="2.35"
+            position="-1.15 0.040 0.02">
+        </a-text>
+
+        <a-text value="Aparta la mirada para cerrar"
+            color="#D7C6AA" align="center"
+            width="2.3" position="0 -0.75 0.02">
+        </a-text>
+        </a-entity>
+
+        <!-- cartel 1 -->
+
+        <a-plane
+        id="obra1"
+        class="obra-interactiva"
+        obra-interactiva="ficha: #ficha1"
+        src="#1"
+        material="src: #1; shader: flat"
+        rotation="0 90 0"
+        width="3"
+        height="3"
+        position="-4.9 2 -2.3"
+        ></a-plane>
+
+        <!-- cartel pequeño -->
+        <a-entity
+        position="-4.82 0.65 -2.3"
+        rotation="0 90 0"
+        >
+        <a-plane
+            width="1.5"
+            height="0.65"
+            material="color: #F2E8D5; shader: flat"
+        ></a-plane>
+
+        <a-text
+            value="Las mandarinas (1919)"
+            color="#28231F"
+            align="center"
+            width="3"
+            position="0 0.12 0.01"
+        ></a-text>
+
+        <a-text
+            value="Ryunosuke Akutagawa"
+            color="#28231F"
+            align="center"
+            width="2.95"
+            position="0 -0.12 0.01"
+        ></a-text>
+        </a-entity>
+
+        <!-- ficha ampliada -->
+        <a-entity
+        id="ficha1"
+        visible="false"
+        position="-4.82 2 -2.3"
+        rotation="0 90 0"
+        >
+        <a-plane
+            width="2.6"
+            height="2"
+            material="color: #211F1C; opacity: 0.96; shader: flat"
+        ></a-plane>
+
+        <a-text
+            value="Las mandarinas (1919)"
+            color="#F4D7A1"
+            align="center"
+            width="2.3"
+            position="0 0.68 0.02"
+        ></a-text>
+
+        <a-text
+            value="Un hombre hastiado y deprimido viaja en un frio vagon de tren junto a una muchacha de aspecto humilde, sin imaginar que un imprevisto gesto de ella cambiara por completo su gris percepcion del viaje."
+            color="#FFFFFF"
+            align="left"
+            wrap-count="32"
+            width="2.15"
+            position="-1.05 0.15 0.02"
+        ></a-text>
+
+        <a-text
+            value="Aparta la mirada para cerrar"
+            color="#F4D7A1"
+            align="center"
+            width="2.1"
+            position="0 -0.78 0.02"
+        ></a-text>
+        </a-entity>
+
+         <!-- cartel 2 -->
+
+        <a-plane
+        id="obra2"
+        class="obra-interactiva"
+        obra-interactiva="ficha: #ficha2"
+        src="#2"
+        rotation="0 0 0"
+        width="3"
+        height="3"
+        position="-2.3 2 -4.9">
+        </a-plane>
+
+        <!-- ficha pequeña -->
+        <a-entity position="-2.3 0.65 -4.86" rotation="0 0 0">
+        <a-plane width="2.7" height="0.55"
+            material="color: #F2E8D5; shader: flat">
+        </a-plane>
+
+        <a-text value="Extractos de la agenda de Yasukichi (1923)"
+            color="#28231F" align="center"
+            width="3" position="0 0.12 0.01">
+        </a-text>
+
+        <a-text value="Ryunosuke Akutagawa"
+            color="#28231F" align="center"
+            width="2.95" position="0 -0.12 0.01">
+        </a-text>
+        </a-entity>
+
+        <!-- ficha ampliada -->
+        <a-entity id="ficha2" visible="false"
+        position="-2.3 2 -4.8" rotation="0 0 0">
+
+        <a-plane width="2.65" height="1.8"
+            material="color: #211F1C; shader: flat; opacity: 0.97">
+        </a-plane>
+
+        <a-text value="Extractos de la agenda de Yasukichi (1923)"
+            color="#F4D7A1" align="center"
+            wrap-count="30" width="2.4"
+            position="0 0.62 0.02">
+        </a-text>
+
+        <a-text
+            value="Un joven profesor de ingles de fuerte sensibilidad artistica debe sobrevivir al dia a dia dentro de una ruda y rigida Escuela Naval militar."
+            color="#FFFFFF" align="left"
+            wrap-count="34" width="2.35"
+            position="-1.15 0.24 0.02">
+        </a-text>
+
+        <a-text value="Aparta la mirada para cerrar"
+            color="#D7C6AA" align="center"
+            width="2.3" position="0 -0.75 0.02">
+        </a-text>
+        </a-entity>
+
+         <!-- cartel 3 -->
+
+        <a-plane
+        id="obra3"
+        class="obra-interactiva"
+        obra-interactiva="ficha: #ficha3"
+        src="#3"
+        rotation="0 0 0"
+        width="3"
+        height="3"
+        position="2.3 2 -4.9">
+        </a-plane>
+
+        <!-- Cartela pequeña -->
+        <a-entity position="2.3 0.65 -4.82" rotation="0 0 0">
+        <a-plane width="2.5" height="0.55"
+            material="color: #F2E8D5; shader: flat">
+        </a-plane>
+
+        <a-text value="Al borde del mar (1924)"
+            color="#28231F" align="center"
+            width="3" position="0 0.12 0.01">
+        </a-text>
+
+        <a-text value="Ryunosuke Akutagawa"
+            color="#28231F" align="center"
+            width="2.95" position="0 -0.12 0.01">
+        </a-text>
+        </a-entity>
+
+        <!-- Cartela ampliada -->
+        <a-entity id="ficha3" visible="false"
+        position="2.3 2 -4.80" rotation="0 0 0">
+
+        <a-plane width="2.65" height="1.8"
+            material="color: #211F1C; shader: flat; opacity: 0.97">
+        </a-plane>
+
+        <a-text value="Al borde del mar (1924)"
+            color="#F4D7A1" align="center"
+            width="2.4" position="0 0.7 0.02">
+        </a-text>
+
+        <a-text
+            value="Durante una estancia en la costa, un hombre busca refugio en la naturaleza, pero la extraña quietud del paisaje empieza a reflejar de forma inquietante su propia desconexion con el mundo."
+            color="#FFFFFF" align="left"
+            wrap-count="34" width="2.35"
+            position="-1.15 0.30 0.02">
+        </a-text>
+
+        <a-text value="Aparta la mirada para cerrar"
+            color="#D7C6AA" align="center"
+            width="2.3" position="0 -0.75 0.02">
+        </a-text>
+        </a-entity>
+
+         <!-- cartel 4 -->
+
+        <a-plane
+        id="obra4"
+        class="obra-interactiva"
+        obra-interactiva="ficha: #ficha4"
+        src="#4"
+        rotation="0 -90 0"
+        width="3"
+        height="3"
+        position="4.9 2 -2.3">
+        </a-plane>
+
+        <!-- ficha pequeña -->
+        <a-entity position="4.82 0.65 -2.3" rotation="0 -90 0">
+        <a-plane width="2.5" height="0.55"
+            material="color: #F2E8D5; shader: flat">
+        </a-plane>
+
+        <a-text value="Engranajes (1927)"
+            color="#28231F" align="center"
+            width="3" position="0 0.12 0.01">
+        </a-text>
+
+        <a-text value="Ryunosuke Akutagawa"
+            color="#28231F" align="center"
+            width="2.95" position="0 -0.12 0.01">
+        </a-text>
+        </a-entity>
+
+        <!-- ficha ampliada -->
+        <a-entity id="ficha4" visible="false"
+        position="4.80 2 -2.3" rotation="0 -90 0">
+
+        <a-plane width="2.65" height="1.8"
+            material="color: #211F1C; shader: flat; opacity: 0.97">
+        </a-plane>
+
+        <a-text value="Engranajes (1927)"
+            color="#F4D7A1" align="center"
+            width="2.4" position="0 0.79 0.02">
+        </a-text>
+
+        <a-text
+            value="Un escritor viaja a Tokio para asistir a una boda, pero el viaje se convierte en una pesadilla cuando empieza a ser perseguido por extrañas visiones geometricas y presagios que nublan su realidad."
+            color="#FFFFFF" align="left"
+            wrap-count="34" width="2.35"
+            position="-1.15 0.30 0.02">
+        </a-text>
+
+        <a-text value="Aparta la mirada para cerrar"
+            color="#D7C6AA" align="center"
+            width="2.3" position="0 -0.75 0.02">
+        </a-text>
+        </a-entity>
+
+         <!-- cartel 5 -->
+
+        <a-plane
+        id="obra5"
+        class="obra-interactiva"
+        obra-interactiva="ficha: #ficha5"
+        src="#5"
+        rotation="0 -90 0"
+        width="3"
+        height="3"
+        position="4.9 2 2.3">
+        </a-plane>
+
+        <!-- ficha pequeña -->
+        <a-entity position="4.82 0.65 2.3" rotation="0 -90 0">
+        <a-plane width="2.5" height="0.55"
+            material="color: #F2E8D5; shader: flat">
+        </a-plane>
+
+        <a-text value="Vida de un idiota (1927 - Postumo)"
+            color="#28231F" align="center"
+            width="3" position="0 0.12 0.01">
+        </a-text>
+
+        <a-text value="Ryunosuke Akutagawa"
+            color="#28231F" align="center"
+            width="2.95" position="0 -0.12 0.01">
+        </a-text>
+        </a-entity>
+
+        <!-- ficha ampliada -->
+        <a-entity id="ficha5" visible="false"
+        position="4.80 2 2.3" rotation="0 -90 0">
+
+        <a-plane width="2.65" height="1.8"
+            material="color: #211F1C; shader: flat; opacity: 0.97">
+        </a-plane>
+
+        <a-text value="Vida de un idiota (1927 - Postumo)"
+            color="#F4D7A1" align="center"
+            width="2.4" position="0 0.7 0.02">
+        </a-text>
+
+        <a-text
+            value="A traves de 51 fogonazos de memoria, un autor se disecciona a si mismo en tercera persona, repasando los encuentros, libros y obsesiones que moldearon su mente."
+            color="#FFFFFF" align="left"
+            wrap-count="34" width="2.35"
+            position="-1.15 0.30 0.02">
+        </a-text>
+
+        <a-text value="Aparta la mirada para cerrar"
+            color="#D7C6AA" align="center"
+            width="2.3" position="0 -0.75 0.02">
+        </a-text>
+        </a-entity>
+
+    </a-scene>
+</body>
+</html>
